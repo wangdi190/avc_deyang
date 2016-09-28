@@ -1,0 +1,230 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: ParseDataFile - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/ParseDataFile.res" /d "_DEBUG" "E:\wangdi\四川电压无功\srcc\ParseDataFile\ParseDataFile.rc"" 
+Creating temporary file "C:\Users\wangdi\AppData\Local\Temp\RSP6DCD.tmp" with contents
+[
+/nologo /Zp1 /MTd /W3 /Gm /GX /ZI /Od /I "../include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/ParseDataFile.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\CommonFunc.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcBus.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCCtrlEvent.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCCtrlParam.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCCtrlPloy.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCCtrlZone.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcRelay.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcRunParam.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcRunTimePart.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcShunt.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCShuntEvent.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCStatInfo.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcStation.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCTranEvent.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcTrans.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCVolEvent.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCWarnInfo.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCWarnType.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AVCZoneChange.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_CommonVec.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_PASIsland.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_PASMeasure.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_PASParam.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_PASRuninfo.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwBus.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwGen.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwLine.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwLoad.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwShuntSreact.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwStation.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwSwitch.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwTfm.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwTfmTap.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_pwZone.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\Dialog_Log.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\IDbInterface.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\LoginDialog.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\Parse.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\ParseDataFile.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\ParseDataFileDlg.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\RealDataBase.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\RealSearth.cpp"
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\Utils.cpp"
+]
+Creating command line "cl.exe @C:\Users\wangdi\AppData\Local\Temp\RSP6DCD.tmp" 
+Creating temporary file "C:\Users\wangdi\AppData\Local\Temp\RSP6DCE.tmp" with contents
+[
+/nologo /Zp1 /MTd /W3 /Gm /GX /ZI /Od /I "../include" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /FR"Debug/" /Fp"Debug/ParseDataFile.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"E:\wangdi\四川电压无功\srcc\ParseDataFile\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\Users\wangdi\AppData\Local\Temp\RSP6DCE.tmp" 
+Creating temporary file "C:\Users\wangdi\AppData\Local\Temp\RSP6DCF.tmp" with contents
+[
+/nologo /subsystem:windows /incremental:yes /pdb:"Debug/ParseDataFile.pdb" /debug /machine:I386 /out:"E:\wangdi\四川电压无功\bin_avc\ParseDataFile.exe" /pdbtype:sept /libpath:"../lib" 
+".\Debug\CommonFunc.obj"
+".\Debug\DB_AvcBus.obj"
+".\Debug\DB_AVCCtrlEvent.obj"
+".\Debug\DB_AVCCtrlParam.obj"
+".\Debug\DB_AVCCtrlPloy.obj"
+".\Debug\DB_AVCCtrlZone.obj"
+".\Debug\DB_AvcRelay.obj"
+".\Debug\DB_AvcRunParam.obj"
+".\Debug\DB_AvcRunTimePart.obj"
+".\Debug\DB_AvcShunt.obj"
+".\Debug\DB_AVCShuntEvent.obj"
+".\Debug\DB_AVCStatInfo.obj"
+".\Debug\DB_AvcStation.obj"
+".\Debug\DB_AVCTranEvent.obj"
+".\Debug\DB_AvcTrans.obj"
+".\Debug\DB_AVCVolEvent.obj"
+".\Debug\DB_AVCWarnInfo.obj"
+".\Debug\DB_AVCWarnType.obj"
+".\Debug\DB_AVCZoneChange.obj"
+".\Debug\DB_CommonVec.obj"
+".\Debug\DB_PASIsland.obj"
+".\Debug\DB_PASMeasure.obj"
+".\Debug\DB_PASParam.obj"
+".\Debug\DB_PASRuninfo.obj"
+".\Debug\DB_pwBus.obj"
+".\Debug\DB_pwGen.obj"
+".\Debug\DB_pwLine.obj"
+".\Debug\DB_pwLoad.obj"
+".\Debug\DB_pwShuntSreact.obj"
+".\Debug\DB_pwStation.obj"
+".\Debug\DB_pwSwitch.obj"
+".\Debug\DB_pwTfm.obj"
+".\Debug\DB_pwTfmTap.obj"
+".\Debug\DB_pwZone.obj"
+".\Debug\Dialog_Log.obj"
+".\Debug\IDbInterface.obj"
+".\Debug\LoginDialog.obj"
+".\Debug\Parse.obj"
+".\Debug\ParseDataFile.obj"
+".\Debug\ParseDataFileDlg.obj"
+".\Debug\RealDataBase.obj"
+".\Debug\RealSearth.obj"
+".\Debug\StdAfx.obj"
+".\Debug\Utils.obj"
+".\Debug\ParseDataFile.res"
+]
+Creating command line "link.exe @C:\Users\wangdi\AppData\Local\Temp\RSP6DCF.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+CommonFunc.cpp
+DB_AvcBus.cpp
+E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcBus.cpp(76) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcBus.cpp(88) : warning C4305: '=' : truncation from 'const double' to 'float'
+DB_AVCCtrlEvent.cpp
+DB_AVCCtrlParam.cpp
+DB_AVCCtrlPloy.cpp
+DB_AVCCtrlZone.cpp
+DB_AvcRelay.cpp
+E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcRelay.cpp(32) : warning C4101: 'pDBrec' : unreferenced local variable
+DB_AvcRunParam.cpp
+DB_AvcRunTimePart.cpp
+DB_AvcShunt.cpp
+DB_AVCShuntEvent.cpp
+DB_AVCStatInfo.cpp
+DB_AvcStation.cpp
+DB_AVCTranEvent.cpp
+DB_AvcTrans.cpp
+E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcTrans.cpp(58) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+E:\wangdi\四川电压无功\srcc\ParseDataFile\DB_AvcTrans.cpp(92) : warning C4800: 'unsigned char' : forcing value to bool 'true' or 'false' (performance warning)
+DB_AVCVolEvent.cpp
+DB_AVCWarnInfo.cpp
+DB_AVCWarnType.cpp
+DB_AVCZoneChange.cpp
+DB_CommonVec.cpp
+Generating Code...
+Compiling...
+DB_PASIsland.cpp
+DB_PASMeasure.cpp
+DB_PASParam.cpp
+DB_PASRuninfo.cpp
+DB_pwBus.cpp
+DB_pwGen.cpp
+DB_pwLine.cpp
+DB_pwLoad.cpp
+DB_pwShuntSreact.cpp
+DB_pwStation.cpp
+DB_pwSwitch.cpp
+DB_pwTfm.cpp
+DB_pwTfmTap.cpp
+DB_pwZone.cpp
+Dialog_Log.cpp
+IDbInterface.cpp
+LoginDialog.cpp
+Parse.cpp
+ParseDataFile.cpp
+ParseDataFileDlg.cpp
+Generating Code...
+Compiling...
+RealDataBase.cpp
+RealSearth.cpp
+Utils.cpp
+Generating Code...
+Linking...
+Creating temporary file "C:\Users\wangdi\AppData\Local\Temp\RSP80F3.tmp" with contents
+[
+/nologo /o"Debug/ParseDataFile.bsc" 
+".\Debug\StdAfx.sbr"
+".\Debug\CommonFunc.sbr"
+".\Debug\DB_AvcBus.sbr"
+".\Debug\DB_AVCCtrlEvent.sbr"
+".\Debug\DB_AVCCtrlParam.sbr"
+".\Debug\DB_AVCCtrlPloy.sbr"
+".\Debug\DB_AVCCtrlZone.sbr"
+".\Debug\DB_AvcRelay.sbr"
+".\Debug\DB_AvcRunParam.sbr"
+".\Debug\DB_AvcRunTimePart.sbr"
+".\Debug\DB_AvcShunt.sbr"
+".\Debug\DB_AVCShuntEvent.sbr"
+".\Debug\DB_AVCStatInfo.sbr"
+".\Debug\DB_AvcStation.sbr"
+".\Debug\DB_AVCTranEvent.sbr"
+".\Debug\DB_AvcTrans.sbr"
+".\Debug\DB_AVCVolEvent.sbr"
+".\Debug\DB_AVCWarnInfo.sbr"
+".\Debug\DB_AVCWarnType.sbr"
+".\Debug\DB_AVCZoneChange.sbr"
+".\Debug\DB_CommonVec.sbr"
+".\Debug\DB_PASIsland.sbr"
+".\Debug\DB_PASMeasure.sbr"
+".\Debug\DB_PASParam.sbr"
+".\Debug\DB_PASRuninfo.sbr"
+".\Debug\DB_pwBus.sbr"
+".\Debug\DB_pwGen.sbr"
+".\Debug\DB_pwLine.sbr"
+".\Debug\DB_pwLoad.sbr"
+".\Debug\DB_pwShuntSreact.sbr"
+".\Debug\DB_pwStation.sbr"
+".\Debug\DB_pwSwitch.sbr"
+".\Debug\DB_pwTfm.sbr"
+".\Debug\DB_pwTfmTap.sbr"
+".\Debug\DB_pwZone.sbr"
+".\Debug\Dialog_Log.sbr"
+".\Debug\IDbInterface.sbr"
+".\Debug\LoginDialog.sbr"
+".\Debug\Parse.sbr"
+".\Debug\ParseDataFile.sbr"
+".\Debug\ParseDataFileDlg.sbr"
+".\Debug\RealDataBase.sbr"
+".\Debug\RealSearth.sbr"
+".\Debug\Utils.sbr"]
+Creating command line "bscmake.exe @C:\Users\wangdi\AppData\Local\Temp\RSP80F3.tmp"
+Creating browse info file...
+<h3>Output Window</h3>
+
+
+
+<h3>Results</h3>
+ParseDataFile.exe - 0 error(s), 5 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,10 @@
+#!/bin/bash
+IP=192.168.1.155
+ftp -i -v -n <<FTPIT
+open $IP
+user Administrator open_3000   
+bin  
+passive  
+put $1 $2 
+quit  
+FTPIT

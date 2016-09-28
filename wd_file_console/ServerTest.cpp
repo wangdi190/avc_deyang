@@ -1,0 +1,189 @@
+#include "Data.h"
+CData m_Data;
+
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+
+#define LOCKFILE "./SingleApplication"
+#define LOCKMODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+
+int lockfile(int fd)
+{
+    struct flock fl;
+    fl.l_type = F_WRLCK;
+    fl.l_start = 0;
+    fl.l_whence = SEEK_SET;
+    fl.l_len = 0;
+    return (fcntl(fd,F_SETLK,&fl));
+}
+
+int alread_running(char * filename)
+{
+    char buf[16]={0};
+    int fd = open(filename, O_RDWR|O_CREAT, LOCKMODE);
+    if(fd<0)
+    {
+       printf("cannot open %s\n", filename);
+       return -1;
+   }
+    
+    if(lockfile(fd) == -1)
+    {
+	if(errno==EACCES || errno==EAGAIN)
+	{
+	    printf("file %s already locked\n", filename);
+	    close(fd);
+	    return -1;
+	}
+	printf("cannot lock %s\n", filename);
+	return -1;
+    }
+    ftruncate(fd, 0);
+    sprintf(buf, "%ld", (long)getpid());
+    write(fd, buf, strlen(buf)+1);
+    return 0;
+}
+
+void work_process()
+{
+	char *pData;
+	TimeData_Struct *pTD;
+	Data_Struct *pD;
+	DataInfo_Struct dInfo;
+	struct timeval timenow;
+	time_t ltime;
+    struct tm *now;
+	int nBufSize, nTotalBufSize, nTotalWriteSize, nTempWriteSize;
+	char pDataFile[64],pShellCmd[128];;
+
+    printf("start the Thread.Pid=%d\n", getpid());
+    m_Data.Parse_ProfileXml("/users/ems/wd_file_console/profile.xml");	
+
+	while(1)
+	{
+		if(access("/users/ems/wd_file_console/wd.Model", F_OK) == 0)
+		{
+			//AddTip("wd.Model exists,Restart Parse_ProfileXml...");
+			m_Data.Parse_ProfileXml("/users/ems/wd_file_console/profile.xml");
+			remove("/users/ems/wd_file_console/wd.Model");
+			//bStartProgram = true;
+		}
+
+		gettimeofday(&timenow,0);
+		for(int i=0; i<m_Data.m_VecTimeData.size(); i++)
+		{
+			pTD = &m_Data.m_VecTimeData.at(i);
+
+			if(timenow.tv_sec - pTD->timevalue.tv_sec > pTD->nIntervalTime)
+			{
+				if(pTD->bStartProgram == true)
+				{
+					sleep(5);
+					pTD->bStartProgram = false;
+				}
+			
+				pTD->timevalue = timenow;
+				memset(pDataFile, 0, 64);
+				time(&ltime);
+				now = localtime( &ltime );
+				sprintf(pDataFile,  "Data_%d_%d%02d%02d%02d%02d%02d.dat", pTD->nIntervalTime, 
+							1900+now->tm_year, now->tm_mon+1, now->tm_mday,
+							now->tm_hour, now->tm_min, now->tm_sec);
+			
+				printf("\n\n\nGet %8ds Data run.(%s)\n\n\n", pTD->nIntervalTime, pDataFile);
+				nTotalBufSize = 0;
+				nTotalWriteSize = 0;
+
+				FILE *fp = fopen(pDataFile, "wb");
+				if(fp == NULL)
+				{
+					printf("\n\n\nfopen %s: fp=null\n\n\n", pDataFile);
+				}
+				
+				for(int n=0; n<pTD->vecdata.size(); n++)
+				{
+					pD = &pTD->vecdata.at(n);
+					nBufSize = 0;
+					nTempWriteSize = 0;
+					pData = NULL;
+					pData = m_Data.GetDataByFieldName(pD->nAppNo, pD->nTableNo, pD->field_name, nBufSize);
+					
+					nTotalBufSize += nBufSize;
+					
+					memset(&dInfo, 0, sizeof(DataInfo_Struct));
+					dInfo.top = 0x16;
+					dInfo.bottom = 0x16;
+					dInfo.nAppNo = pD->nAppNo;
+					dInfo.nTableNo = pD->nTableNo;
+					dInfo.nBufSize = nBufSize;
+					dInfo.nTypeID = pD->nTypeID;
+					strcpy(dInfo.pName, pD->pName);			
+					fwrite((char*)&dInfo, sizeof(DataInfo_Struct), 1, fp);
+
+					if(pData != NULL && nBufSize > 0)
+					{
+						nTempWriteSize = fwrite(pData, sizeof(char), nBufSize, fp);
+						if(nTempWriteSize != nBufSize)
+						{
+							printf("\n\n\nfwrite nBufSize=%d,nTempWriteSize=%d\n\n\n", nBufSize, nTempWriteSize);
+						}
+						
+						nTotalWriteSize += nTempWriteSize;
+					}
+					else
+					{
+						printf("\n\n\n\nGet AppNo=%d,TableNo=%d failed.(%d)\n\n\n\n", pD->nAppNo, pD->nTableNo, nBufSize);
+					}
+
+					if (pData != NULL)
+					{
+						free(pData);
+						pData = NULL;
+					}
+				}
+
+				fclose(fp);
+				memset(pShellCmd, 0, 128);
+				sprintf(pShellCmd, "sh /users/ems/wd_file_console/putfile %s %s", pDataFile, pDataFile);
+				system(pShellCmd);
+				
+				sleep(1);
+			  remove(pDataFile);
+
+			}
+		}
+}
+}
+
+int main(int argc, char* argv[])
+{
+	if(alread_running(LOCKFILE) == -1)
+	{
+		return 0;
+	}
+	
+	int stat;
+	while(1)
+	{
+		pid_t fpid; 
+		fpid=fork();   
+		if (fpid < 0)  //fork error
+		{
+			printf("error in fork!"); 
+			sleep(60); 
+			continue;
+		}
+		else if (fpid == 0) //child process
+		{  
+			work_process();
+		}  
+		else //parent process
+		{
+			wait(&stat);
+			printf("wait return\nwait return\nwait return\nwait return\nwait return\nwait return\n");
+		}  
+	}
+	
+	return 0;
+}

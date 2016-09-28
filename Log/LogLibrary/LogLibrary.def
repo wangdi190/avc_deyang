@@ -1,0 +1,9 @@
+; LogLibrary.def : Declares the module parameters for the DLL.
+
+LIBRARY      "LogLibrary"
+DESCRIPTION  'LogLibrary Windows Dynamic Link Library'
+
+EXPORTS
+    ; Explicit exports can go here
+	WriteRecord		@1
+	ReadRecord		@2

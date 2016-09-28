@@ -1,0 +1,134 @@
+#include "Data.h"
+//#include "./db_api/odb_tableop.h"
+//using namespace ODB;
+
+#include "./db_api/odb_tablenet.h"
+using namespace NET_ODB;
+
+char* CData::GetDataByFieldName(int AppNo, int TableNo, char *pFiledName, int &bufSize)
+{
+	char *pData;
+	//CTableOp tab_op;
+	CTableNet tab_op;
+	int nRet = tab_op.Open(AppNo, TableNo, 1);
+	if(nRet != 0)
+	{
+		printf("open AppNo=%d,TableNo=%d failed.\n", AppNo, TableNo);
+		bufSize=-1;
+		return NULL;
+	}
+	
+	if(tab_op.TableGet(pFiledName, (char**)&pData, bufSize) < 0)
+	{
+		printf("TableGet AppNo=%d,TableNo=%d failed.\n", AppNo, TableNo);
+		
+		return NULL;
+	}
+	else
+	{	
+		return pData;
+	}
+	return NULL;
+}
+
+
+void CData::GetPropValueToInt(xmlNodePtr cur, char *Prop, int &nValue)
+{
+	xmlChar *value;
+	value = xmlGetProp(cur, (const xmlChar*) Prop);
+	nValue = atoi((char*)value);
+	xmlFree(value);
+}
+
+void CData::GetPropValueToPtr(xmlNodePtr cur, char *Prop, char *pValue)
+{
+	xmlChar *value;
+	value = xmlGetProp(cur, (const xmlChar*) Prop);
+	printf("%s\n", value);
+	strcpy(pValue, (char*)value);
+	xmlFree(value);
+}
+
+bool CData::SortByInterval(TimeData_Struct a, TimeData_Struct b)
+{
+	if(a.nIntervalTime>b.nIntervalTime)
+		return true;
+	else
+		return false;
+}
+
+int CData::Parse_ProfileXml(char *profile_name)
+{
+    for(int i=0; i<m_VecTimeData.size(); i++)
+    {
+	m_VecTimeData.at(i).vecdata.clear();
+    }
+    m_VecTimeData.clear();
+    m_VecData.clear();
+    
+  xmlDocPtr doc;  //
+  xmlNodePtr cur;  //
+  xmlChar *value;
+  Data_Struct dataStruct;
+  TimeData_Struct timedata_Struct;
+  doc = xmlParseFile(profile_name);
+  if (doc == NULL )
+  {
+    fprintf(stderr,"profile xmlParseFile return is null.\n");
+    return 1;
+  }
+  
+  cur = xmlDocGetRootElement(doc);
+  if (cur == NULL)
+  {
+    fprintf(stderr,"profile xmlDocGetRootElement is null.\n");
+    xmlFreeDoc(doc);
+    return 1;
+  }
+  
+  cur = cur->xmlChildrenNode;
+  while (cur != NULL)
+  {
+  	memset(&dataStruct, 0, sizeof(Data_Struct));
+  	if((!xmlStrcmp(cur->name, (const xmlChar *)"Data")))
+  	{
+  		GetPropValueToInt(cur, "AppNo", dataStruct.nAppNo);
+  		GetPropValueToInt(cur, "TableNo", dataStruct.nTableNo);
+  		GetPropValueToInt(cur, "TimeInterval", dataStruct.nIntervalTime);
+  		GetPropValueToPtr(cur, "Name", dataStruct.pName);
+		GetPropValueToInt(cur, "TypeID", dataStruct.nTypeID);
+		GetPropValueToInt(cur, "SendTag", dataStruct.SendTag);
+  		//printf("%s\n", dataStruct.pName);
+  		value = xmlNodeGetContent(cur);
+  		strcpy(dataStruct.field_name, (char*)value);
+  		xmlFree(value);
+  		
+  		//printf("%d,%d,%d,%s,%s\n", dataStruct.nAppNo, dataStruct.nTableNo,
+		//	dataStruct.nIntervalTime, dataStruct.pName, dataStruct.field_name);
+  		
+  		m_VecData.push_back(dataStruct);
+		
+		bool bFound = false;
+		for(int i=0; i<m_VecTimeData.size(); i++)
+		{
+			if(m_VecTimeData.at(i).nIntervalTime == dataStruct.nIntervalTime)
+			{
+				m_VecTimeData.at(i).vecdata.push_back(dataStruct);
+				bFound = true;
+			}
+		}
+		if(bFound == false)
+		{
+			memset(&timedata_Struct, 0, sizeof(TimeData_Struct));
+			timedata_Struct.nIntervalTime = dataStruct.nIntervalTime;
+			timedata_Struct.bStartProgram = true;
+			timedata_Struct.vecdata.push_back(dataStruct);
+			m_VecTimeData.push_back(timedata_Struct);
+		}
+  	}
+  	cur = cur->next;
+  }
+  xmlFreeDoc(doc);
+  std::sort(m_VecTimeData.begin(), m_VecTimeData.end(), SortByInterval);
+  return 0;
+}

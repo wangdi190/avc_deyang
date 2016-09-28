@@ -1,0 +1,73 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>MainForm</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>MainForm</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>600</width>
+            <height>480</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Open3000_Data</string>
+    </property>
+    <property name="icon">
+        <pixmap>Data.bmp</pixmap>
+    </property>
+    <widget class="QListBox">
+        <item>
+            <property name="text">
+                <string>New Item</string>
+            </property>
+        </item>
+        <property name="name">
+            <cstring>listBox_info</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>151</y>
+                <width>580</width>
+                <height>320</height>
+            </rect>
+        </property>
+    </widget>
+    <widget class="QLabel">
+        <property name="name">
+            <cstring>textLabel_show</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>120</x>
+                <y>30</y>
+                <width>351</width>
+                <height>71</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>textLabel1</string>
+        </property>
+        <property name="alignment">
+            <set>AlignCenter</set>
+        </property>
+    </widget>
+</widget>
+<includes>
+    <include location="local" impldecl="in implementation">Mainform.ui.h</include>
+</includes>
+<slots>
+    <slot>BtnClicked()</slot>
+    <slot>AddTip( QString strTip, bool bWarn )</slot>
+</slots>
+<functions>
+    <function>init()</function>
+    <function access="protected">closeEvent( QCloseEvent * e )</function>
+    <function>customEvent( QCustomEvent * event )</function>
+</functions>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

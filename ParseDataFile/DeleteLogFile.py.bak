@@ -1,0 +1,46 @@
+import os,re,datetime,time
+
+regex=r'Data_\d+_\d{14}.dat$'
+
+DataLogPath='D:\DataFile_Ftp\log'
+
+nowstamp = time.time()
+date=datetime.date.fromtimestamp(nowstamp)
+datestart_1min = date-datetime.timedelta(days=1) #
+datestart_30min = date-datetime.timedelta(days=2) #
+datestart = date-datetime.timedelta(days=3) #
+
+wd_1min_MaxNum=100
+n_1min=0
+
+wd_30min_MaxNum=100
+n_30min=0
+
+wd_over30min_MaxNum=100
+n_over30min=0
+
+for root, dirs, files in os.walk(DataLogPath):
+    newFiles = sorted(files, reverse=True)
+
+for file in newFiles:
+    if not re.match(regex,file) == None:
+        a,b,c = file.split('_',2)
+        filedate = datetime.date.fromtimestamp(time.mktime(time.strptime(c,'%Y%m%d%H%M%S.dat')))
+        if( int(b)<=60 and filedate<datestart_1min ):
+            n_1min = n_1min+1
+            if(n_1min>wd_1min_MaxNum):
+                print('<1min:delete '+file)
+                os.remove(DataLogPath+'\\'+file)
+
+        elif(int(b)<=1800 and filedate<datestart_30min ):
+            n_30min = n_30min+1
+            if(n_30min>wd_30min_MaxNum):
+                print('<30min:delete '+file)
+                os.remove(DataLogPath+'\\'+file)
+
+        else:
+            if( filedate<datestart ):
+                n_over30min = n_over30min+1
+                if(n_over30min>wd_over30min_MaxNum):
+                    print('>30min:delete '+file)
+                    os.remove(DataLogPath+'\\'+file)
