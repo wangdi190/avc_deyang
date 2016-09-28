@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="VoltageQ.Views.StationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:con="clr-namespace:VoltageQ.Controls"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" IsVisibleChanged="UserControl_IsVisibleChanged" xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors">
+    <Grid Loaded="Grid_Loaded" Unloaded="Grid_Unloaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="2*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <dxc:ChartControl Name="chart">
+            <!--<dxc:ChartControl.Legend>
+                <dxc:Legend HorizontalPosition="RightOutside"  VerticalPosition="Top"  Orientation="Vertical"  />
+            </dxc:ChartControl.Legend>-->
+            <dxc:ChartControl.Palette>
+                <dxc:OfficePalette />
+            </dxc:ChartControl.Palette>
+            <dxc:XYDiagram2D>
+                <dxc:XYDiagram2D.DefaultPane>
+                    <dxc:Pane MirrorHeight="35.0"/>
+                </dxc:XYDiagram2D.DefaultPane>
+                
+                <dxc:XYDiagram2D.Series>
+                    <dxc:BarSideBySideSeries2D x:Name="chart_bar" LabelsVisibility="True" ColorEach="True">
+                        <dxc:BarSideBySideSeries2D.Label>
+                            <dxc:SeriesLabel ResolveOverlappingMode="JustifyAllAroundPoint" />
+                        </dxc:BarSideBySideSeries2D.Label>
+                        <dxc:BarSideBySideSeries2D.Model>
+                            <dxc:GlassCylinderBar2DModel />
+                        </dxc:BarSideBySideSeries2D.Model>
+                    </dxc:BarSideBySideSeries2D>
+                </dxc:XYDiagram2D.Series>
+            </dxc:XYDiagram2D>
+        </dxc:ChartControl>
+
+        
+
+        <con:DayCurveControl1 x:Name="Station_Curve"  Grid.Row="1"></con:DayCurveControl1>
+
+        <dxn:NavBarControl Grid.Column="1" Name="navbar">
+            <dxn:NavBarControl.View>
+                <dxn:SideBarView dxn:ScrollingSettings.ScrollMode="ScrollBar"></dxn:SideBarView>
+            </dxn:NavBarControl.View>
+            <dxn:NavBarGroup Header="母线">
+                <ListView x:Name="lv_bus">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="时间">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=M_TIME,StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_NAME}" Header="名称"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_VOL}" Header="当前电压"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_VMAX}" Header="电压上限"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_VMIN}" Header="电压下限"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </dxn:NavBarGroup>
+
+            <dxn:NavBarGroup Header="变压器">
+                <ListView x:Name="lv_tfm">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="时间">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=时间,StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 名称}" Header="名称"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 变压器容量}" Header="变压器容量"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 当前有功}" Header="当前有功"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 当前无功}" Header="当前无功"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 当前功率}" Header="当前功率"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 当前档位}" Header="当前档位"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 功率下限}" Header="功率下限"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding 功率上限}" Header="功率上限"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </dxn:NavBarGroup>
+
+            <dxn:NavBarGroup Header="电容">
+                <ListView x:Name="lv_shunt">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="时间">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=M_TIME,StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}"></TextBlock>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_NAME}" Header="名称"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_S}" Header="电容器容量"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding M_Q}" Header="当前无功"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </dxn:NavBarGroup>
+        </dxn:NavBarControl>
+
+
+        <dxg:GridControl Name="controlView"  Grid.Column="1" Grid.Row="1" ShowBorder="True">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn  FieldName="时间" Header="时间" Width="150">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:DateEditSettings DisplayFormat="yyyy-MM-dd HH:mm:ss"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="控制原因" Header="控制原因"/>
+                <dxg:GridColumn FieldName="措施" Header="措施"/>
+                <dxg:GridColumn FieldName="命令描述" Header="命令描述"/>
+                <dxg:GridColumn FieldName="处理状态" Header="处理状态"/>
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView AllowPerPixelScrolling="True" AllowFilterEditor="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" ShowGroupPanel="False" FadeSelectionOnLostFocus="False" AutoWidth="False"  ShowHorizontalLines="True" ShowIndicator="False" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+        
+
+        <!--<dxn:NavBarControl Grid.Column="1" Grid.Row="1" Name="navbar1">
+            <dxn:NavBarControl.View>
+                <dxn:SideBarView dxn:ScrollingSettings.ScrollMode="ScrollBar"></dxn:SideBarView>
+            </dxn:NavBarControl.View>
+            <dxn:NavBarGroup Header="电压越线">
+            </dxn:NavBarGroup>
+
+            <dxn:NavBarGroup Header="无功越线"></dxn:NavBarGroup>
+            <dxn:NavBarGroup Header="控制"></dxn:NavBarGroup>
+        </dxn:NavBarControl>-->
+    </Grid>
+</UserControl>

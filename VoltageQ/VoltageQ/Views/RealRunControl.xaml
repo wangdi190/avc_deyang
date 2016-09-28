@@ -1,0 +1,215 @@
+﻿<UserControl x:Class="VoltageQ.Views.RealRunControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:local="clr-namespace:VoltageQ.Views"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
+             xmlns:con="clr-namespace:VoltageQ.Controls"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             dx:ThemeManager.ThemeName="VS2010"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <dxwui:PageAdornerControl Name="adorner" Header="实时运行"  Foreground="#FFE87F00" Grid.RowSpan="2">
+        <dxwui:PageAdornerControl.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#FF135693"  Offset="0.0" />
+                <GradientStop Color="#FF67B5FC"  Offset="0.2" />
+                <GradientStop Color="#FF135693" Offset="0.4" />
+                <GradientStop Color="#FF67B5FC" Offset="0.6" />
+                <GradientStop Color="#FF135693" Offset="0.8" />
+                <GradientStop Color="#FF67B5FC" Offset="1" />
+            </LinearGradientBrush>
+        </dxwui:PageAdornerControl.Background>
+        
+            <ContentControl>
+            <!--<i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding Control_Loaded}" CommandParameter="{Binding ElementName=grid}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>-->
+            
+            <Grid Name="grid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="5*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!--<local:CalucateSetControl Grid.ColumnSpan="2" dxmvvm:ViewModelExtensions.ParentViewModel="{Binding}"></local:CalucateSetControl>-->
+                <!--<Button Grid.Column="1" Command="{Binding NavigateCommand}" CommandParameter="HisCalucateControl" dxmvvm:ViewModelExtensions.ParentViewModel="{Binding}">111</Button>-->               
+                
+                <Grid Grid.Column="1" Grid.Row="1"  Name="laygrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <dxlc:FlowLayoutControl Grid.Row="0" Name="layoutControl"  AllowItemMoving="False"  AllowMaximizedElementMoving="False" AnimateItemMoving="True" DragScrolling="False"
+                                   Loaded="layoutControl_Loaded"  MaximizedElementChanged="layoutControl_MaximizedElementChanged" VerticalAlignment="Top">
+                        <dxlc:GroupBox Tag="实时指标">
+                            <dxlc:GroupBox.Header>
+                                <Label HorizontalContentAlignment="Center" MouseDown="Label_MouseDown" >实时指标</Label>
+                            </dxlc:GroupBox.Header>
+                            <dxlc:GroupBox.Content>
+                                <con:RealChartControl x:Name="realChartControl"></con:RealChartControl>
+                            </dxlc:GroupBox.Content>
+                        </dxlc:GroupBox>
+
+                        <dxlc:GroupBox Tag="实时明细">
+                            <dxlc:GroupBox.Header>
+                                <Label HorizontalContentAlignment="Center" MouseDown="Label_MouseDown" >实时明细</Label>
+                            </dxlc:GroupBox.Header>
+                            <dxlc:GroupBox.Content>
+                                <con:RealDetailControl x:Name="realDetailControl"></con:RealDetailControl>
+                            </dxlc:GroupBox.Content>
+                        </dxlc:GroupBox>
+
+                        <dxlc:GroupBox Tag="当日指标">
+                            <dxlc:GroupBox.Header>
+                                <Label HorizontalContentAlignment="Center" MouseDown="Label_MouseDown">当日指标</Label>
+                            </dxlc:GroupBox.Header>
+                            <dxlc:GroupBox.Content>
+                                <con:DayChartControl x:Name="dayChartControl"></con:DayChartControl>
+                            </dxlc:GroupBox.Content>
+                        </dxlc:GroupBox>
+
+                        <dxlc:GroupBox Tag="当日明细">
+                            <dxlc:GroupBox.Header>
+                                <Label HorizontalContentAlignment="Center" MouseDown="Label_MouseDown">当日明细</Label>
+                            </dxlc:GroupBox.Header>
+                            <dxlc:GroupBox.Content>
+                                <con:DayCurveControl1 x:Name="dayCurveControl"></con:DayCurveControl1>
+                            </dxlc:GroupBox.Content>
+                        </dxlc:GroupBox>
+                    </dxlc:FlowLayoutControl>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <WrapPanel VerticalAlignment="Top" HorizontalAlignment="Center">
+
+                            <dxga:StateIndicatorControl StateIndex="1" Margin="2" ToolTip="1111">
+                                <dxga:StateIndicatorControl.Model>
+                                    <dxga:LampStateIndicatorModel/>
+                                </dxga:StateIndicatorControl.Model>
+                            </dxga:StateIndicatorControl>
+
+                            <Label Width="20"></Label>
+
+                            <dxga:StateIndicatorControl StateIndex="1" Margin="2" ToolTip="2222">
+                                <dxga:StateIndicatorControl.Model>
+                                    <dxga:LampStateIndicatorModel/>
+                                </dxga:StateIndicatorControl.Model>
+                            </dxga:StateIndicatorControl>
+
+                            <Label Width="20"></Label>
+
+                            <dxga:StateIndicatorControl StateIndex="3" Margin="2" ToolTip="3333">
+                                <dxga:StateIndicatorControl.Model>
+                                    <dxga:LampStateIndicatorModel/>
+                                </dxga:StateIndicatorControl.Model>
+                            </dxga:StateIndicatorControl>
+
+                            <Label Width="20"></Label>
+
+                                <dxga:StateIndicatorControl StateIndex="1" Margin="2" ToolTip="4444">
+                                    <dxga:StateIndicatorControl.Model>
+                                        <dxga:LampStateIndicatorModel />
+                                    </dxga:StateIndicatorControl.Model>
+                                </dxga:StateIndicatorControl>
+                        </WrapPanel>
+                        <con:UpTextControl Grid.Column="1"></con:UpTextControl>
+                        <Button Grid.Column="1" HorizontalAlignment="Right" Click="Button_Click"></Button>
+                        <!--<Image Grid.Column="1" HorizontalAlignment="Right" Source="../Images/1.ico" ></Image>-->
+                    </Grid>
+                </Grid>
+
+
+                        <!--<dxn:NavBarControl Grid.RowSpan="2" Margin="5">
+                        <dxn:NavBarControl.Groups>
+                            <dxn:NavBarGroup Header="中心市区" ImageSource="../Images/1.ico">
+                                <dxn:NavBarItem ImageSource="../Images/1.ico" >德阳</dxn:NavBarItem>
+                                <dxn:NavBarItem ImageSource="../Images/1.ico">德阳</dxn:NavBarItem>
+                                <dxn:NavBarItem ImageSource="../Images/1.ico">德阳</dxn:NavBarItem>
+                                <dxn:NavBarItem ImageSource="../Images/1.ico">德阳</dxn:NavBarItem>
+                            </dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="潮阳" Name="tree_station"></dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="澄海" Name="tree_voltage"></dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="潮南" ></dxn:NavBarGroup>
+                            <dxn:NavBarGroup Header="南澳"></dxn:NavBarGroup>
+                        </dxn:NavBarControl.Groups>
+                    </dxn:NavBarControl>-->
+
+                 <TreeView Grid.RowSpan="2" Margin="5">
+                    <TreeViewItem Header="系统" IsExpanded="True" FontFamily="华文彩云" FontSize="24">
+                        <CheckBox Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Tag="1" Content="全系统电网" IsChecked="True"></CheckBox>
+                    </TreeViewItem>
+
+                        <TreeViewItem Header="区域" Name="tree_zone" FontFamily="华文彩云" FontSize="24">
+                            <TreeViewItem.ItemTemplate>
+                                <HierarchicalDataTemplate>
+                                    <WrapPanel>
+                                        <CheckBox Content="{Binding Path=R_NAME}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Tag="2"></CheckBox>
+                                        <Image Source="../Images/1.ico"></Image>
+                                    </WrapPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeViewItem.ItemTemplate>
+                        </TreeViewItem>
+
+                    <TreeViewItem Header="厂站" Name="tree_station">
+                        <TreeViewItem.ItemTemplate>
+                            <HierarchicalDataTemplate>
+                                <CheckBox Content="{Binding Path=R_NAME}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Tag="3"></CheckBox>
+                            </HierarchicalDataTemplate>
+                        </TreeViewItem.ItemTemplate>
+                    </TreeViewItem>
+
+                    <TreeViewItem Header="电压等级" Name="tree_voltage">
+                        <TreeViewItem.ItemTemplate>
+                            <HierarchicalDataTemplate>
+                                <CheckBox Content="{Binding Path=R_NAME}" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Tag="4"></CheckBox>
+                            </HierarchicalDataTemplate>
+                        </TreeViewItem.ItemTemplate>
+                    </TreeViewItem>
+                </TreeView>
+                
+                
+            </Grid>
+        </ContentControl>
+    </dxwui:PageAdornerControl>
+        
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="550" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+            </Grid.ColumnDefinitions>
+            
+
+            <Button Content="历史指标" Grid.Column="2"  Style="{StaticResource ModuleLinkButton}" Command="{Binding NavigateCommand}" CommandParameter="HisCalucateControl"></Button>
+            <Button Content="欢迎页" Grid.Column="4" Style="{StaticResource ModuleLinkButton}" Command="{Binding NavigateCommand}" CommandParameter="WelcomeControl"></Button>
+
+        </Grid>
+    </Grid>
+</UserControl>

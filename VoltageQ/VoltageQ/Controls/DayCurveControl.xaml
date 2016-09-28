@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="VoltageQ.Controls.DayCurveControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts">
+    <Grid Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="10*"></ColumnDefinition>
+            <ColumnDefinition Width="170"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        
+        <dxc:ChartControl Name="chart" Grid.RowSpan="3" Grid.ColumnSpan="3">
+            <dxc:ChartControl.Legend>
+                <dxc:Legend HorizontalPosition="Left"  VerticalPosition="TopOutside"  Orientation="Horizontal"  />
+            </dxc:ChartControl.Legend>
+            <dxc:XYDiagram2D>
+                <dxc:XYDiagram2D.AxisX>
+                    <dxc:AxisX2D DateTimeGridAlignment="Minute"  DateTimeMeasureUnit="Minute" >
+                        <dxc:AxisX2D.DateTimeOptions>
+                            <dxc:DateTimeOptions Format="Custom" FormatString="HH:mm" />
+                        </dxc:AxisX2D.DateTimeOptions>
+                        <dxc:AxisX2D.Range>
+                            <dxc:AxisRange MinValue="00:00:00.000"  MaxValue="23:59:59.000" />
+                        </dxc:AxisX2D.Range>
+                    </dxc:AxisX2D>
+                </dxc:XYDiagram2D.AxisX>
+                
+                <dxc:XYDiagram2D.SeriesTemplate>
+                    <!--<dxc:LineSeries2D ArgumentDataMember="NAME"  ValueDataMember="VALUE"></dxc:LineSeries2D>-->
+                    <dxc:LineSeries2D></dxc:LineSeries2D>
+                </dxc:XYDiagram2D.SeriesTemplate>
+                
+            </dxc:XYDiagram2D>
+        </dxc:ChartControl>
+
+        <ScrollViewer  Grid.Row="1" Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left">
+            <StackPanel Name="rightStack" HorizontalAlignment="Left" Opacity="0.4" MouseEnter="rightStack_MouseEnter" MouseLeave="rightStack_MouseLeave">
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

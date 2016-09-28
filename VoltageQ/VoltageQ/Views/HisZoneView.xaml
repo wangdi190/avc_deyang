@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="VoltageQ.Views.HisZoneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>    
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <dxc:ChartControl Name="radarChart">
+            <dxc:RadarDiagram2D>
+                <dxc:RadarDiagram2D.AxisY>
+                    <dxc:RadarAxisY2D GridLinesMinorVisible="True" Thickness="3" TickmarksThickness="2" />
+                </dxc:RadarDiagram2D.AxisY>
+
+                <dxc:RadarAreaSeries2D x:Name="radar" LabelsVisibility="True" ColorEach="True" Transparency="0.3" >
+                    <dxc:RadarAreaSeries2D.Label>
+                        <dxc:SeriesLabel ResolveOverlappingMode="JustifyAllAroundPoint" DataContext="{Binding}" />
+                    </dxc:RadarAreaSeries2D.Label>
+                </dxc:RadarAreaSeries2D>
+            </dxc:RadarDiagram2D>
+        </dxc:ChartControl>
+
+
+        <dxg:GridControl Name="listView"  Grid.Column="1" Grid.Row="0" ShowBorder="False">
+            <!--<dxg:GridControl.View>
+                <dxg:CardView AllowEditing="False" ShowGroupedColumns="True" NavigationStyle="Row" ShowGroupPanel="False"/>
+            </dxg:GridControl.View>-->
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="名称" Header="名称"/>
+                <dxg:GridColumn FieldName="数量" Header="数量"/>
+            </dxg:GridControl.Columns>
+            
+            <dxg:GridControl.View>
+                <dxg:TableView AllowPerPixelScrolling="True" AllowFilterEditor="False" AllowEditing="False" NavigationStyle="Row" AllowHorizontalScrollingVirtualization="False" ShowGroupPanel="False" FadeSelectionOnLostFocus="False" AutoWidth="False"  ShowHorizontalLines="True" ShowIndicator="False" />
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+
+        <dxc:ChartControl Name="lineChart" Grid.Row="1" Grid.ColumnSpan="2">
+            <dxc:ChartControl.CrosshairOptions>
+                <dxc:CrosshairOptions x:Name="CrosshairOpt"/>
+            </dxc:ChartControl.CrosshairOptions>
+
+            <dxc:ChartControl.Palette>
+                <dxc:PastelKitPalette />
+            </dxc:ChartControl.Palette>
+
+            <dxc:ChartControl.Legend>
+                <dxc:Legend HorizontalPosition="RightOutside"  VerticalPosition="Top"  Orientation="Vertical"  />
+            </dxc:ChartControl.Legend>
+
+            <dxc:XYDiagram2D>
+
+                <dxc:XYDiagram2D.AxisX>
+                    <dxc:AxisX2D DateTimeGridAlignment="Minute"  DateTimeMeasureUnit="Minute">
+                        <dxc:AxisX2D.DateTimeOptions>
+                            <dxc:DateTimeOptions Format="Custom"  FormatString="HH:mm:ss" />
+                        </dxc:AxisX2D.DateTimeOptions>
+                        <dxc:AxisX2D.Range>
+                            <dxc:AxisRange Name="lineTimeRange"/>
+                        </dxc:AxisX2D.Range>
+                    </dxc:AxisX2D>
+                </dxc:XYDiagram2D.AxisX>
+                <dxc:XYDiagram2D.Series>
+                    <dxc:LineSeries2D DisplayName="AVC使用率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="AVC使用率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="电压合格率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="电压合格率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="无功合格率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="无功合格率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="设备可用率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="设备可用率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="AVC应用率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="AVC应用率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="AVC控制成功率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="AVC控制成功率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="AVC响应率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="AVC响应率"></dxc:LineSeries2D>
+                    <dxc:LineSeries2D DisplayName="AVC控制率" ArgumentScaleType="DateTime" ArgumentDataMember="时间" ValueDataMember="AVC控制率"></dxc:LineSeries2D>
+                </dxc:XYDiagram2D.Series>
+                <!--<dxc:XYDiagram2D.SeriesTemplate>
+                    <dxc:LineSeries2D ArgumentScaleType="DateTime"/>
+                </dxc:XYDiagram2D.SeriesTemplate>-->
+            </dxc:XYDiagram2D>
+        </dxc:ChartControl>
+
+    </Grid>
+</UserControl>

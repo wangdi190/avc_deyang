@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="VoltageQ.Controls.HisCurveControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts">
+    <Grid Loaded="Grid_Loaded">
+        <dxc:ChartControl Name="chart">
+            <dxc:ChartControl.Legend>
+                <dxc:Legend />
+            </dxc:ChartControl.Legend>
+            <dxc:XYDiagram2D>
+                <dxc:XYDiagram2D.AxisX>
+                    <dxc:AxisX2D DateTimeGridAlignment="Hour"  DateTimeMeasureUnit="Hour" >
+                        <dxc:AxisX2D.DateTimeOptions>
+                            <dxc:DateTimeOptions Format="Custom" FormatString="HH:mm" />
+                        </dxc:AxisX2D.DateTimeOptions>
+                    </dxc:AxisX2D>
+                </dxc:XYDiagram2D.AxisX>
+            </dxc:XYDiagram2D>
+        </dxc:ChartControl>
+    </Grid>
+</UserControl>

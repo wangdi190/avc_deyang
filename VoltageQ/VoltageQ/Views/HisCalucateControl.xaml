@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="VoltageQ.Views.HisCalucateControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:bornander="clr-namespace:Bornander.UI.TabCarousel;assembly=Bornander.UI.TabCarousel"
+             xmlns:con="clr-namespace:VoltageQ.Controls"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             dx:ThemeManager.ThemeName="VS2010"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+    <dxwui:PageAdornerControl Header="历史指标" Foreground="#FFE87F00" Grid.RowSpan="2">
+        <dxwui:PageAdornerControl.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#FF135693"  Offset="0.0" />
+                <GradientStop Color="#FF67B5FC"  Offset="0.2" />
+                <GradientStop Color="#FF135693" Offset="0.4" />
+                <GradientStop Color="#FF67B5FC" Offset="0.6" />
+                <GradientStop Color="#FF135693" Offset="0.8" />
+                <GradientStop Color="#FF67B5FC" Offset="1" />
+            </LinearGradientBrush>
+        </dxwui:PageAdornerControl.Background>
+
+
+        <Grid Loaded="Grid_Loaded">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="100"></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <bornander:Carousel Grid.Row="1"   x:Name="TabControl" Depth="0.3" EnableFlip="False" WrapAtEnd="True" MouseWheel="TabControl_MouseWheel"/>
+            <Image Grid.Row="1" Source="../Images/prev.png" Width="50" Height="200" VerticalAlignment="Center" HorizontalAlignment="Left" Tag="prev" Opacity="0.6" MouseDown="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"></Image>
+            <Image Grid.Row="1" Source="../Images/next.png" Width="50" Height="200" VerticalAlignment="Center" HorizontalAlignment="Right" Tag="next" Opacity="0.6" MouseDown="Button_Click" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave"></Image>
+
+            <WrapPanel Grid.Row="2" HorizontalAlignment="Center"  Orientation="Horizontal">
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="0"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="1"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="2"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="3"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="4"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="5"></Image>
+                <Image Margin="5" Source="../Images/4.png" MouseEnter="Item_MouseEnter" MouseLeave="Item_MouseLeave" MouseDown="Item_MouseDown" Loaded="Item_Loaded" Tag="6"></Image>
+            </WrapPanel>
+        </Grid>
+    </dxwui:PageAdornerControl>
+
+        <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label VerticalAlignment="Center" FontFamily="YouYuan" FontSize="24" Foreground="WhiteSmoke" Content="1:"></Label>
+            <ComboBox Width="120" VerticalAlignment="Center">
+                <ComboBoxItem Content="系统" Tag="1" IsSelected="True" />
+                <ComboBoxItem Content="区域" Tag="2"/>
+                <ComboBoxItem Content="电压等级" Tag="4"/>
+                <ComboBoxItem Content="厂站" Tag="3"/>
+            </ComboBox>
+            <Label VerticalAlignment="Center" FontFamily="YouYuan" FontSize="24" Foreground="WhiteSmoke" Content="   2:"></Label>
+            <ComboBox   Width="120" VerticalAlignment="Center"></ComboBox>
+            <Label VerticalAlignment="Center" FontFamily="YouYuan" FontSize="24" Foreground="WhiteSmoke" Content="   3:"></Label>
+            <DatePicker Width="120" VerticalAlignment="Center"></DatePicker>
+            <Label VerticalAlignment="Center" FontFamily="YouYuan" FontSize="24" Foreground="WhiteSmoke" Content="          "></Label>
+            <Button Name="cal"  Width="120" Height="70" ></Button>
+        </WrapPanel>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="550" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" MaxWidth="30" />
+            </Grid.ColumnDefinitions>
+
+            <Button Content="实时运行" Grid.Column="2"  Style="{StaticResource ModuleLinkButton}" Command="{Binding NavigateCommand}" CommandParameter="ChooseView"></Button>
+            <Button Content="欢迎页" Grid.Column="4" Style="{StaticResource ModuleLinkButton}" Command="{Binding NavigateCommand}" CommandParameter="WelcomeControl"></Button>
+        </Grid>
+    </Grid>
+</UserControl>

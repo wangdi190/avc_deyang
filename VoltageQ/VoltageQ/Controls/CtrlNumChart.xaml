@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="VoltageQ.Controls.CtrlNumChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Border BorderBrush="Transparent" BorderThickness="0" CornerRadius="30">
+        <StackPanel>
+            <TextBlock Foreground="DarkTurquoise" x:Name="chartflag" FontSize="32" Margin="20,0" FontWeight="Bold"/>
+            <dxc:ChartControl Background="{x:Null}" CrosshairEnabled="True">
+                <dxc:ChartControl.CrosshairOptions>
+                    <dxc:CrosshairOptions CrosshairLabelMode="ShowForNearestSeries" />
+                </dxc:ChartControl.CrosshairOptions>
+                <dxc:ChartControl.Palette>
+                    <dxc:CustomPalette>
+                        <dxc:CustomPalette.Colors>
+                            <Color>Red</Color>
+                            <Color>Blue</Color>
+                            <Color>Magenta</Color>
+                            <Color>Cyan</Color>
+                        </dxc:CustomPalette.Colors>
+                    </dxc:CustomPalette>
+                </dxc:ChartControl.Palette>
+                <dxc:XYDiagram2D Background="{x:Null}">
+                    <dxc:XYDiagram2D.DefaultPane>
+                        <dxc:Pane DomainBorderBrush="{x:Null}" DomainBrush="{x:Null}" Foreground="{x:Null}"/>
+                    </dxc:XYDiagram2D.DefaultPane>
+                    <dxc:BarSideBySideSeries2D ColorEach="True" LabelsVisibility="True" CrosshairLabelPattern="{}{A}: {V:F0}">
+                        <dxc:BarSideBySideSeries2D.Label>
+                            <dxc:SeriesLabel Background="Transparent" Visibility="Visible" dxc:BarSideBySideSeries2D.LabelPosition="Outside" />
+                        </dxc:BarSideBySideSeries2D.Label>
+                        <dxc:BarSideBySideSeries2D.Model>
+                            <dxc:GlassCylinderBar2DModel />
+                        </dxc:BarSideBySideSeries2D.Model>
+                        <dxc:SeriesPoint x:Name="volnum"  Argument="电压越限数" Value="1" />
+                        <dxc:SeriesPoint x:Name="cosnum" Argument="无功越限数" Value="1" />
+                        <dxc:SeriesPoint x:Name="locknum" Argument="闭锁数" Value="4" />
+                        <dxc:SeriesPoint x:Name="ctrlnum" Argument="控制数" Value="7" />
+                    </dxc:BarSideBySideSeries2D>
+                </dxc:XYDiagram2D>
+            </dxc:ChartControl>
+        </StackPanel>
+    </Border>
+</UserControl>

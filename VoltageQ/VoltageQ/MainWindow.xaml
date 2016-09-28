@@ -1,0 +1,22 @@
+﻿<Window x:Class="VoltageQ.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+        xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:wind="clr-namespace:VoltageQ.Windows"
+        Title="MainWindow" Height="350" Width="525" WindowState="Maximized" Topmost="False" >
+    <Grid>
+        <!--xmlns:win="clr-namespace:VoltageQ.Windows"-->
+        <dxmvvm:Interaction.Triggers>
+            <dxmvvm:EventToCommand EventName="Loaded" Command="{Binding OnViewLoadedCommand}" />
+        </dxmvvm:Interaction.Triggers>
+        <dxmvvm:Interaction.Behaviors>
+            <dxwuin:FrameNavigationService Frame="{Binding ElementName=frame}" />
+            <dx:DXSplashScreenService SplashScreenType="{x:Type wind:WaitWindow}" />
+        </dxmvvm:Interaction.Behaviors>
+
+        <dxwui:NavigationFrame x:Name="frame" AnimationType="SlideVertical"  BackNavigationMode="PreviousScreen"/>
+    </Grid>
+</Window>

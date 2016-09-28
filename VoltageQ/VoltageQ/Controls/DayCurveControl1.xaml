@@ -1,0 +1,120 @@
+﻿<UserControl x:Class="VoltageQ.Controls.DayCurveControl1"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="500">
+    <Grid>
+        <dxc:ChartControl Name="chart" EnableAnimation="True" IsManipulationEnabled="True" CustomDrawCrosshair="chart_CustomDrawCrosshair">
+            <dxc:ChartControl.CrosshairOptions>
+                <dxc:CrosshairOptions x:Name="CrosshairOpt" ShowArgumentLine="True" ArgumentLineBrush="DeepSkyBlue" ShowOnlyInFocusedPane="False">
+                    <dxc:CrosshairOptions.ArgumentLineStyle>
+                        <dxc:LineStyle Thickness="2"/>
+                    </dxc:CrosshairOptions.ArgumentLineStyle>
+                </dxc:CrosshairOptions>
+            </dxc:ChartControl.CrosshairOptions>
+            
+            <dxc:ChartControl.Palette>
+                <dxc:PastelKitPalette />
+            </dxc:ChartControl.Palette>
+            
+            <dxc:ChartControl.Legend>
+                <dxc:Legend VerticalPosition="TopOutside" HorizontalPosition="Left" Orientation="Horizontal"/>
+            </dxc:ChartControl.Legend>
+            <dxc:ChartControl.Diagram>
+                <dxc:XYDiagram2D EnableAxisXNavigation="True">
+                    <dxc:XYDiagram2D.PanesPanel>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </dxc:XYDiagram2D.PanesPanel>
+                    <dxc:XYDiagram2D.DefaultPane>
+                        <dxc:Pane x:Name="temperaturePane" Grid.Row="0">
+                            <dxc:Pane.AxisXScrollBarOptions>
+                                <dxc:ScrollBarOptions Visible="False" />
+                            </dxc:Pane.AxisXScrollBarOptions>
+                        </dxc:Pane>
+                    </dxc:XYDiagram2D.DefaultPane>
+                    <dxc:XYDiagram2D.Panes>
+                        <dxc:Pane x:Name="pressurePane" Grid.Row="1">
+                            <dxc:Pane.AxisXScrollBarOptions>
+                                <dxc:ScrollBarOptions Visible="False" />
+                            </dxc:Pane.AxisXScrollBarOptions>
+                        </dxc:Pane>
+                        <dxc:Pane x:Name="humidityPane" Grid.Row="2"/>
+                    </dxc:XYDiagram2D.Panes>
+                    <dxc:XYDiagram2D.AxisY>
+                        <dxc:AxisY2D GridLinesMinorVisible="True">
+                            <dxc:AxisY2D.Title>
+                                <dxc:AxisTitle Content="电压、无功合格率" />
+                            </dxc:AxisY2D.Title>
+                            <dxc:AxisY2D.Range>
+                                <dxc:AxisRange MaxValue="100" MinValue="0" />
+                            </dxc:AxisY2D.Range>
+                        </dxc:AxisY2D>
+                    </dxc:XYDiagram2D.AxisY>
+                    <dxc:XYDiagram2D.SecondaryAxesY>
+                        <dxc:SecondaryAxisY2D x:Name="pressureAxis" Alignment="Near" GridLinesMinorVisible="True"  >
+                            <dxc:SecondaryAxisY2D.Title>
+                                <dxc:AxisTitle Content="无功备用率、负载率" />
+                            </dxc:SecondaryAxisY2D.Title>
+                            <dxc:SecondaryAxisY2D.Range>
+                                <dxc:AxisRange MaxValue="100" MinValue="0" />
+                            </dxc:SecondaryAxisY2D.Range>
+                        </dxc:SecondaryAxisY2D>
+                        <dxc:SecondaryAxisY2D x:Name="humidityAxis" Alignment="Near" GridLinesMinorVisible="True" >
+                            <dxc:SecondaryAxisY2D.Title>
+                                <dxc:AxisTitle Content="可用率" />
+                            </dxc:SecondaryAxisY2D.Title>
+                            <dxc:SecondaryAxisY2D.Range>
+                                <dxc:AxisRange MaxValue="100" MinValue="0" />
+                            </dxc:SecondaryAxisY2D.Range>
+                        </dxc:SecondaryAxisY2D>
+                    </dxc:XYDiagram2D.SecondaryAxesY>
+                    <dxc:XYDiagram2D.AxisX>
+                        <dxc:AxisX2D DateTimeGridAlignment="Minute"  DateTimeMeasureUnit="Minute">
+                            <dxc:AxisX2D.DateTimeOptions>
+                                <dxc:DateTimeOptions Format="Custom" FormatString="HH:mm:ss" />
+                            </dxc:AxisX2D.DateTimeOptions>
+                            <dxc:AxisX2D.Range>
+                                <dxc:AxisRange MinValue="00:00:00"  MaxValue="23:59:59" />
+                            </dxc:AxisX2D.Range>
+                            <dxc:AxisX2D.VisibilityInPanes>
+                                <dxc:VisibilityInPane Pane="{Binding ElementName=pressurePane}" Visible="False" />
+                                <dxc:VisibilityInPane Pane="{Binding ElementName=temperaturePane}" Visible="False" />
+                            </dxc:AxisX2D.VisibilityInPanes>
+                        </dxc:AxisX2D>
+                    </dxc:XYDiagram2D.AxisX>
+
+                    <dxc:XYDiagram2D.Series>
+                        <dxc:LineSeries2D x:Name="chart_wghgl" DisplayName="无功合格率"></dxc:LineSeries2D>
+                        <dxc:LineSeries2D x:Name="chart_dyhgl" DisplayName="电压合格率"></dxc:LineSeries2D>
+                        <dxc:PointSeries2D x:Name="chart_sj" DisplayName="事件" ArgumentScaleType="DateTime" MarkerSize="12">
+                            <dxc:PointSeries2D.MarkerModel>
+                                <dxc:TriangleMarker2DModel />
+                            </dxc:PointSeries2D.MarkerModel>
+                        </dxc:PointSeries2D>
+
+                        <dxc:AreaSeries2D x:Name="chart_fzl" DisplayName="负载率" Transparency="0.5"  dxc:XYDiagram2D.SeriesAxisY="{Binding ElementName=pressureAxis}"
+                                                   dxc:XYDiagram2D.SeriesPane="{Binding RelativeSource={RelativeSource AncestorType=dxc:XYDiagram2D}, Path=Panes[0]}"></dxc:AreaSeries2D>
+                        <dxc:AreaSeries2D x:Name="chart_wgbyl" DisplayName="无功备用率" Transparency="0.5" dxc:XYDiagram2D.SeriesAxisY="{Binding ElementName=pressureAxis}"
+                                                   dxc:XYDiagram2D.SeriesPane="{Binding RelativeSource={RelativeSource AncestorType=dxc:XYDiagram2D}, Path=Panes[0]}"></dxc:AreaSeries2D>
+
+
+                        <dxc:LineSeries2D x:Name="chart_bsl" DisplayName="可用率" dxc:XYDiagram2D.SeriesAxisY="{Binding ElementName=humidityAxis}"
+                                                   dxc:XYDiagram2D.SeriesPane="{Binding RelativeSource={RelativeSource AncestorType=dxc:XYDiagram2D}, Path=Panes[1]}"></dxc:LineSeries2D>
+
+                    </dxc:XYDiagram2D.Series>
+                </dxc:XYDiagram2D>
+            </dxc:ChartControl.Diagram>
+        </dxc:ChartControl>
+    </Grid>
+</UserControl>
